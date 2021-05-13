@@ -9,16 +9,25 @@ import java.util.Scanner;
 
 import lombok.extern.slf4j.Slf4j;
 
+import static ee.home.constants.BTCServiceConstants.EXIT;
+import static ee.home.services.CoinDeskRatioService.*;
+
 
 @Slf4j
 public class Application {
    public static void main(String[] args) {
-      log.info("Please input 3-letter currency code");
       Scanner scanner = new Scanner(System.in);
-      CoinDeskRatioService service = new CoinDeskRatioService();
 
-      String currencyCode = scanner.nextLine();
-      service.getCurrentPrice(currencyCode);
-      service.getHistoricalPrice(currencyCode);
+      while (true) {
+         log.info("\nPlease input a desired currency code or \"exit\" to discontinue");
+
+         String currencyCode = scanner.nextLine();
+
+         if (currencyCode.trim().equalsIgnoreCase(EXIT)) {
+            break;
+         }
+         processRequest(currencyCode);
+      }
+      scanner.close();
    }
 }

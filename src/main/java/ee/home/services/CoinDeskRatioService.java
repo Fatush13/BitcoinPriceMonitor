@@ -12,24 +12,26 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CoinDeskRatioService {
-   CoinDeskClient client = new CoinDeskClient();
+  static CoinDeskClient client = new CoinDeskClient();
 
-   public void getCurrentPrice(String currencyCode) {
+   public static void processRequest(String currencyCode) {
       currencyCode = currencyCode.toUpperCase();
 
       if (CurrencyCodeValidator.checkCurrencyCode(currencyCode)) {
+         getCurrentPrice(currencyCode);
+         getHistoricalPrice(currencyCode);
+      }
+   }
+
+   private static void getCurrentPrice(String currencyCode) {
          String response = client.getCurrentRatio(currencyCode);
 
          String ratio = ResponseMapper.toCurrentPrice(response).getBpi().get(currencyCode).getRate();
 
-         log.info("Current exchange rate of Bitcoin to " + currencyCode + " is 1 to " + ratio);
-      }
+         log.info("Current exchange rate of Bitcoin to {} is 1 to {}", currencyCode, ratio);
    }
 
-   public void getHistoricalPrice(String currencyCode) {
-      currencyCode = currencyCode.toUpperCase();
-
-      if (CurrencyCodeValidator.checkCurrencyCode(currencyCode)) {
+   private static void getHistoricalPrice(String currencyCode) {
          String response = client.getHistoricalRatio(currencyCode);
 
          Collection<Double> bpiValues = ResponseMapper.toHistoricalPrice(response).getBpi().values();
@@ -38,8 +40,7 @@ public class CoinDeskRatioService {
 
          Double highestRatio = Collections.max(bpiValues);
 
-         log.info("During past 30 days the lowest exchange rate of Bitcoin to " + currencyCode + " was 1 to " + lowestRatio);
-         log.info("During past 30 days the highest exchange rate of Bitcoin to " + currencyCode + " was 1 to " + highestRatio);
-      }
+         log.info("During past 30 days the lowest exchange rate of Bitcoin to {} was 1 to {}", currencyCode, lowestRatio);
+         log.info("During past 30 days the highest exchange rate of Bitcoin to {} was 1 to {}", currencyCode, highestRatio);
    }
 }

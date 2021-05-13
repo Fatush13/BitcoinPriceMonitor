@@ -13,7 +13,7 @@ public class CurrencyCodeValidator {
      try {
         Currency.getInstance(currencyCode);
      } catch (Exception e) {
-      log.error("Incorrect currency code");
+      log.error("Incorrect currency code. You can find a proper list of codes at https://en.wikipedia.org/wiki/ISO_4217");
         return false;
      }
       return true;

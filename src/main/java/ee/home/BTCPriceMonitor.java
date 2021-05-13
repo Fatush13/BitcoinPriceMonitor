@@ -10,7 +10,7 @@ import static ee.home.services.CoinDeskRatioService.processRequest;
 
 
 @Slf4j
-public class Application {
+public class BTCPriceMonitor {
    public static void main(String[] args) {
       Scanner scanner = new Scanner(System.in);
 

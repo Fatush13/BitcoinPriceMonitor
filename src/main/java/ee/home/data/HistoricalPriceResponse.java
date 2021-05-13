@@ -14,8 +14,4 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties (ignoreUnknown = true)
 public class HistoricalPriceResponse {
   private Map<String, Double> bpi;
-
-   public Map<String, Double> getBpi() {
-      return bpi;
-   }
 }

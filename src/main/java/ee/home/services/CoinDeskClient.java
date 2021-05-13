@@ -7,7 +7,6 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
-import static ee.home.constants.BTCServiceConstants.CURRENCY;
 import static ee.home.constants.BTCServiceConstants.CURRENT_PRICE_URL;
 import static ee.home.constants.BTCServiceConstants.PRICE_HISTORY_URL;
 
@@ -30,8 +29,7 @@ public class CoinDeskClient {
 
    public Response getHistoricalRatio(String currencyCode) throws IOException {
       Request request =  new Request.Builder()
-           .url(PRICE_HISTORY_URL)
-           .header(CURRENCY, currencyCode)
+           .url(PRICE_HISTORY_URL.replace("#code", currencyCode))
            .build();
 
       return client.newCall(request).execute();

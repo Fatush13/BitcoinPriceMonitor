@@ -2,6 +2,7 @@ package ee.home.data;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
 
@@ -13,5 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties (ignoreUnknown = true)
 public class CurrentPriceResponse {
-   private Map<String, Currency> bpi;
+   @JsonProperty (value = "bpi")
+   private Map<String, Currency> exchangeRates;
 }

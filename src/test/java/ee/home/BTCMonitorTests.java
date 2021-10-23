@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import lombok.SneakyThrows;
 
 import static ee.home.utils.CurrencyCodeValidator.checkCurrencyCode;
+import static java.util.Objects.requireNonNull;
 
 
 public class BTCMonitorTests extends Assertions {
@@ -45,7 +46,7 @@ public class BTCMonitorTests extends Assertions {
    void testClientHistoricalPriceCall() {
       CoinDeskClient client = new CoinDeskClient();
       assertAll("CoinDesk client calls",
-           () -> assertFalse(client.getHistoricalRatio("ASD").body().string().contains("ASD"), "ASD"),
+           () -> assertFalse(requireNonNull(client.getHistoricalRatio("ASD").body()).string().contains("ASD"), "ASD"),
            () -> assertEquals(200, client.getHistoricalRatio("usd").code(), "200")
       );
    }

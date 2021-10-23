@@ -27,8 +27,8 @@ public class CoinDeskRatioService {
 
       if (CurrencyCodeValidator.checkCurrencyCode(currencyCode)) {
          try {
-            getCurrentPrice(currencyCode);
-            getHistoricalPrice(currencyCode);
+            printCurrentPrice(currencyCode);
+            printHistoricalPrice(currencyCode);
          } catch (Exception e) {
             log.info("Could not retrieve data from Coin Desk");
          }
@@ -37,16 +37,15 @@ public class CoinDeskRatioService {
 
    /* implementation */
 
-   private static void getCurrentPrice(String currencyCode) throws IOException {
+   private static void printCurrentPrice(String currencyCode) throws IOException {
       String response = requireNonNull(client.getCurrentRatio(currencyCode).body()).string();
 
       String ratio = ResponseMapper.toCurrentPrice(response).getExchangeRates().get(currencyCode).getRate();
 
       log.info("Current exchange rate of Bitcoin to {} is 1 to {}", currencyCode, ratio);
-
    }
 
-   private static void getHistoricalPrice(String currencyCode) throws IOException {
+   private static void printHistoricalPrice(String currencyCode) throws IOException {
       String response = requireNonNull(client.getHistoricalRatio(currencyCode).body()).string();
 
       Collection<Double> bpiValues = ResponseMapper.toHistoricalPrice(response).getExchangeRates().values();
